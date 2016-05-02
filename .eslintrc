@@ -1,0 +1,55 @@
+{
+  "parser"  : "babel-eslint",
+  "plugins": [
+    "import"
+  ],
+  "extends" : ["airbnb"],
+  "rules": {
+    // Soften some rules.
+    "comma-dangle": 0, // Nobody cares about commas.
+    "default-case": 0, // Required default case is nonsense.
+    "new-cap": [2, {"capIsNew": false, "newIsCap": true}], // For Record() etc.
+    "no-floating-decimal": 0, // .5 is just fine.
+    "no-shadow": 0, // Shadowing is a nice language feature.
+    // eslint-plugin-import
+    "import/no-unresolved": [2, {"commonjs": true}],
+    "import/named": 2,
+    "import/default": 2,
+    "import/namespace": 2,
+    "import/export": 2,
+    // BB rules soften
+    "max-len": 0,
+    "curly": 0, // Do not mess up code with {} for one-line ifs.
+    "key-spacing": [2, {"beforeColon": false, "afterColon": true, "mode": "minimum"}], // Enable use of nice block object creation.
+    "no-use-before-define": 0, // Enable to define styles after using them in component.
+    "react/jsx-no-bind": 0, // Enable arrow functions in Props definitions.
+    "react/prefer-stateless-function": 0 // Enable functions with state.
+  },
+  "globals": {
+    "after": false,
+    "afterEach": false,
+    "before": false,
+    "beforeEach": false,
+    "console": false,
+    "describe": false,
+    "it": false,
+    "module": false,
+    "process": false,
+    "require": false,
+    "window": false
+  },
+  "settings": {
+    "import/ignore": [
+      "node_modules",
+      "\\.json$"
+    ],
+    "import/parser": "babel-eslint",
+    "import/resolve": {
+      "extensions": [
+        ".js",
+        ".jsx",
+        ".json"
+      ]
+    }
+  }
+}
