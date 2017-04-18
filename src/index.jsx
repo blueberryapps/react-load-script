@@ -1,5 +1,6 @@
 import invariant from 'invariant';
-import React, { PropTypes as RPT } from 'react';
+import React from 'react';
+import { PropTypes as RPT } from 'prop-types';
 
 export default class Script extends React.Component {
 
