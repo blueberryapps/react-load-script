@@ -5,11 +5,15 @@ import { PropTypes as RPT } from 'prop-types';
 export default class Script extends React.Component {
 
   static propTypes = {
-    onCreate: RPT.func,
-    onError:  RPT.func.isRequired,
-    onLoad:   RPT.func.isRequired,
-    url:      RPT.string.isRequired
+    onCreate: RPT.func, // eslint-disable-line react/no-unused-prop-types
+    onError: RPT.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    onLoad: RPT.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    url: RPT.string.isRequired,
   };
+
+  static defaultProps = {
+    onCreate: () => {},
+  }
 
   // A dictionary mapping script URLs to a dictionary mapping
   // component key to component for all components that are waiting
@@ -30,7 +34,7 @@ export default class Script extends React.Component {
 
   constructor(props) {
     super(props);
-    this.scriptLoaderId = `id${this.constructor.idCount++}`; // eslint-disable-line space-unary-ops
+    this.scriptLoaderId = `id${this.constructor.idCount++}`; // eslint-disable-line space-unary-ops, no-plusplus
   }
 
   componentDidMount() {
@@ -65,8 +69,9 @@ export default class Script extends React.Component {
 
     // If the component is waiting for the script to load, remove the
     // component from the script's observers before unmounting the component.
-    if (observers)
+    if (observers) {
       delete observers[this.scriptLoaderId];
+    }
   }
 
   createScript() {
@@ -80,14 +85,15 @@ export default class Script extends React.Component {
 
     const callObserverFuncAndRemoveObserver = (shouldRemoveObserver) => {
       const observers = this.constructor.scriptObservers[url];
-      Object.keys(observers).forEach(key => {
-        if (shouldRemoveObserver(observers[key]))
+      Object.keys(observers).forEach((key) => {
+        if (shouldRemoveObserver(observers[key])) {
           delete this.constructor.scriptObservers[url][this.scriptLoaderId];
+        }
       });
     };
     script.onload = () => {
       this.constructor.loadedScripts[url] = true;
-      callObserverFuncAndRemoveObserver(observer => {
+      callObserverFuncAndRemoveObserver((observer) => {
         observer('onLoad');
         return true;
       });
@@ -95,7 +101,7 @@ export default class Script extends React.Component {
 
     script.onerror = () => {
       this.constructor.erroredScripts[url] = true;
-      callObserverFuncAndRemoveObserver(observer => {
+      callObserverFuncAndRemoveObserver((observer) => {
         observer('onError');
         return true;
       });
@@ -109,7 +115,7 @@ export default class Script extends React.Component {
 
     invariant(
       !required || typeof callback === 'function',
-      `Callback ${type} must be function, got "${typeof callback}" instead`
+      `Callback ${type} must be function, got "${typeof callback}" instead`,
     );
 
     return callback && callback();
