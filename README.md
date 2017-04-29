@@ -6,7 +6,7 @@ There are situations when you need to use a 3rd party JS library in your React a
 
 Using the `Script` component this package provides you with, you can easily load any 3rd party scripts your applications needs directly in a relevant component and show a placeholder while the script is loading (e.g. a loading animation). As soon as the script is fully loaded, a callback function you'll have passed to `Script` is called (see example below).
 
-##API
+## API
 The package exports a single component with the following props:
 
 ### `onCreate`
