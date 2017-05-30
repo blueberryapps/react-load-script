@@ -1,18 +1,19 @@
-import invariant from 'invariant';
 import React from 'react';
 import { PropTypes as RPT } from 'prop-types';
 
 export default class Script extends React.Component {
 
   static propTypes = {
-    onCreate: RPT.func, // eslint-disable-line react/no-unused-prop-types
-    onError: RPT.func.isRequired, // eslint-disable-line react/no-unused-prop-types
-    onLoad: RPT.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    onCreate: RPT.func,
+    onError: RPT.func.isRequired,
+    onLoad: RPT.func.isRequired,
     url: RPT.string.isRequired,
   };
 
   static defaultProps = {
     onCreate: () => {},
+    onError: () => {},
+    onLoad: () => {},
   }
 
   // A dictionary mapping script URLs to a dictionary mapping
@@ -38,15 +39,15 @@ export default class Script extends React.Component {
   }
 
   componentDidMount() {
-    const { url } = this.props;
+    const { onError, onLoad, url } = this.props;
 
     if (this.constructor.loadedScripts[url]) {
-      this.runCallback('onLoad');
+      onLoad();
       return;
     }
 
     if (this.constructor.erroredScripts[url]) {
-      this.runCallback('onError');
+      onError();
       return;
     }
 
@@ -54,11 +55,11 @@ export default class Script extends React.Component {
     // and return. Otherwise, initialize the script's observers with the component
     // and start loading the script.
     if (this.constructor.scriptObservers[url]) {
-      this.constructor.scriptObservers[url][this.scriptLoaderId] = this.runCallback.bind(this);
+      this.constructor.scriptObservers[url][this.scriptLoaderId] = this.props;
       return;
     }
 
-    this.constructor.scriptObservers[url] = { [this.scriptLoaderId]: this.runCallback.bind(this) };
+    this.constructor.scriptObservers[url] = { [this.scriptLoaderId]: this.props };
 
     this.createScript();
   }
@@ -75,10 +76,10 @@ export default class Script extends React.Component {
   }
 
   createScript() {
-    const { url } = this.props;
+    const { onCreate, url } = this.props;
     const script = document.createElement('script');
 
-    this.runCallback('onCreate', false);
+    onCreate();
 
     script.src = url;
     script.async = 1;
@@ -94,7 +95,7 @@ export default class Script extends React.Component {
     script.onload = () => {
       this.constructor.loadedScripts[url] = true;
       callObserverFuncAndRemoveObserver((observer) => {
-        observer('onLoad');
+        observer.onLoad();
         return true;
       });
     };
@@ -102,23 +103,12 @@ export default class Script extends React.Component {
     script.onerror = () => {
       this.constructor.erroredScripts[url] = true;
       callObserverFuncAndRemoveObserver((observer) => {
-        observer('onError');
+        observer.onError();
         return true;
       });
     };
 
     document.body.appendChild(script);
-  }
-
-  runCallback(type, required = true) {
-    const callback = this.props[type];
-
-    invariant(
-      !required || typeof callback === 'function',
-      `Callback ${type} must be function, got "${typeof callback}" instead`,
-    );
-
-    return callback && callback();
   }
 
   render() {
