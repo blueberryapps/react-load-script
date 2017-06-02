@@ -1,4 +1,4 @@
-# react-load-script
+# react-load-script [![Dependency Status](https://dependencyci.com/github/blueberryapps/react-load-script/badge)](https://dependencyci.com/github/blueberryapps/react-load-script)
 This package simplifies loading of 3rd party scripts in your React applications.
 
 ## Motivation
