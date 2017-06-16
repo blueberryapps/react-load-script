@@ -47,7 +47,9 @@
     "react-test-renderer": "^15.6.1",
     "rimraf": "2.4.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "shortid": "^2.2.8"
+  },
   "peerDependencies": {
     "react": ">=0.14.9",
     "prop-types": ">=15"
