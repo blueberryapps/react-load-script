@@ -94,8 +94,7 @@ export default class Script extends React.Component {
   }
 
   componentDidMount() {
-    const { onError, onLoad, url } = this.props;
-    this.generate(onError, onLoad, url);
+    this.generate();
   }
 
   shouldComponentUpdate(nextProps) {
