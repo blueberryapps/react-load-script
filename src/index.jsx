@@ -15,9 +15,9 @@ export default class Script extends React.Component {
 
   static defaultProps = {
     onCreate: () => null,
-    onError: () => {},
-    onLoad: () => {},
-    onUnload: () => {},
+    onError: () => null,
+    onLoad: () => null,
+    onUnload: () => null,
   };
 
   // A dictionary mapping script URLs to a dictionary mapping
