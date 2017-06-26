@@ -73,5 +73,5 @@ test('componentWillUnmount should delete observers for the loader', () => {
     wrapper.instance().constructor.scriptObservers[props.url][wrapper.instance().scriptLoaderId];
   expect(getObserver()).toBe('props');
   wrapper.instance().componentWillUnmount();
-  expect(getObserver()).toBe(undefined);
+  expect(wrapper.instance().constructor.scriptObservers).toMatchObject({});
 });

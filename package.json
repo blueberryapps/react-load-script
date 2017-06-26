@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "npm run build:lib",
-    "build:lib": "babel src --out-dir lib && uglifyjs ./lib/index.js -o ./lib/index.min.js",
+    "build:lib": "babel src --out-dir lib",
     "clean": "rimraf lib",
     "lint": "eslint ./src/*",
     "test": "jest",
@@ -45,14 +45,13 @@
     "react-addons-test-utils": "15.5.1",
     "react-dom": "^15.5.4",
     "react-test-renderer": "^15.6.1",
-    "rimraf": "2.4.3",
-    "uglify-js": "^3.0.17"
+    "rimraf": "2.4.3"
   },
   "dependencies": {
     "shortid": "^2.2.8"
   },
   "peerDependencies": {
-    "react": ">=0.14.9",
-    "prop-types": ">=15"
+    "prop-types": ">=15",
+    "react": ">=0.14.9"
   }
 }

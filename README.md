@@ -59,6 +59,51 @@ handleScriptLoad() {
 
 ```
 
+Sometimes you need to change the js inclusion. (Ex: jQuery):
+
+ ```jsx
+ import Script from 'react-load-script'
+ 
+ ...
+ 
+ render() {
+   const { url } = this.props;
+   return (
+     <Script
+       url={url}
+       onCreate={this.handleScriptCreate.bind(this)}
+       onError={this.handleScriptError.bind(this)}
+       onLoad={this.handleScriptLoad.bind(this)}
+       onUnload={this.handleScriptUnload.bind(this)}
+     />
+   )
+ }
+ 
+ ...
+ 
+ handleScriptCreate() {
+   this.setState({ scriptLoaded: false })
+ }
+ 
+ handleScriptError() {
+   this.setState({ scriptError: true })
+ }
+ 
+ handleScriptLoad() {
+   this.setState({ scriptLoaded: true })
+ }
+ 
+ handleScriptUnload() {
+   this.setState({ scriptLoaded: false })
+   
+   // remove the jquery
+   delete window.$;
+   delete window.jQuery;
+   ...
+ }
+ 
+ ```
+
 ## License
 MIT 2016
 

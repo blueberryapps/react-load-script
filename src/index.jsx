@@ -41,56 +41,8 @@ export default class Script extends React.Component {
     super(props);
     this.scriptLoaderId = `id${this.constructor.idCount++}`; // eslint-disable-line space-unary-ops, no-plusplus
     this.pkID = `script-${shortid.generate()}`;
-    this.unmount = () => {
-      const { url, onUnload } = this.props;
-      const observers = this.constructor.scriptObservers[url];
-      const loaded = this.constructor.loadedScripts[url];
-      const errored = this.constructor.erroredScripts[url];
-
-      // If the component is waiting for the script to load, remove the
-      // component from the script's observers before unmounting the component.
-      if (observers) {
-        delete observers[this.scriptLoaderId];
-        // delete (this.constructor.scriptObservers)[url];
-      }
-
-      // If this script has been previously loaded
-      if (loaded) {
-        delete (this.constructor.loadedScripts)[url];
-        const s = document.querySelector(`[data-pkID="${this.pkID}"]`);
-        s.parentNode.removeChild(s);
-        onUnload();
-      }
-
-      // If this script has been previously errored
-      if (errored) {
-        delete (this.constructor.erroredScripts)[url];
-      }
-    };
-    this.generate = () => {
-      const { onError, onLoad, url } = this.props;
-      if (this.constructor.loadedScripts[url]) {
-        onLoad();
-        return;
-      }
-
-      if (this.constructor.erroredScripts[url]) {
-        onError();
-        return;
-      }
-
-      // If the script is loading, add the component to the script's observers
-      // and return. Otherwise, initialize the script's observers with the component
-      // and start loading the script.
-      if (this.constructor.scriptObservers[url]) {
-        this.constructor.scriptObservers[url][this.scriptLoaderId] = this.props;
-        return;
-      }
-
-      this.constructor.scriptObservers[url] = { [this.scriptLoaderId]: this.props };
-
-      this.createScript();
-    };
+    this.unmount = this.unmount.bind(this);
+    this.generate = this.generate.bind(this);
   }
 
   componentDidMount() {
@@ -159,6 +111,58 @@ export default class Script extends React.Component {
     };
 
     document.body.appendChild(script);
+  }
+
+  generate() {
+    const { onError, onLoad, url } = this.props;
+    if (this.constructor.loadedScripts[url]) {
+      onLoad();
+      return;
+    }
+
+    if (this.constructor.erroredScripts[url]) {
+      onError();
+      return;
+    }
+
+    // If the script is loading, add the component to the script's observers
+    // and return. Otherwise, initialize the script's observers with the component
+    // and start loading the script.
+    if (this.constructor.scriptObservers[url]) {
+      this.constructor.scriptObservers[url][this.scriptLoaderId] = this.props;
+      return;
+    }
+
+    this.constructor.scriptObservers[url] = { [this.scriptLoaderId]: this.props };
+
+    this.createScript();
+  }
+
+  unmount() {
+    const { url, onUnload } = this.props;
+    const observers = this.constructor.scriptObservers[url];
+    const loaded = this.constructor.loadedScripts[url];
+    const errored = this.constructor.erroredScripts[url];
+
+    // If the component is waiting for the script to load, remove the
+    // component from the script's observers before unmounting the component.
+    if (observers) {
+      delete observers[this.scriptLoaderId];
+      delete this.constructor.scriptObservers[url];
+    }
+
+    // If this script has been previously loaded
+    if (loaded) {
+      delete (this.constructor.loadedScripts)[url];
+      const s = document.querySelector(`[data-pkID="${this.pkID}"]`);
+      s.parentNode.removeChild(s);
+      onUnload();
+    }
+
+    // If this script has been previously errored
+    if (errored) {
+      delete this.constructor.erroredScripts[url];
+    }
   }
 
   render() {
