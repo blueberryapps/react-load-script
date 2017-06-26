@@ -1,0 +1,14 @@
+machine:
+  node:
+    version: 7
+
+dependencies:
+  pre:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+  override:
+    - yarn install
+
+test:
+  override:
+    - yarn lint
+    - yarn test

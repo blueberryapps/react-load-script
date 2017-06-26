@@ -14,7 +14,7 @@
     "clean": "rimraf lib",
     "lint": "eslint ./src/*",
     "test": "jest",
-    "prepublish": "npm run lint && npm run test && npm run build"
+    "prepublish": "yarn lint && yarn test && yarn build"
   },
   "keywords": [
     "react",
