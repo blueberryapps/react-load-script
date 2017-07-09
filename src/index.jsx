@@ -8,12 +8,14 @@ export default class Script extends React.Component {
     onError: RPT.func.isRequired,
     onLoad: RPT.func.isRequired,
     url: RPT.string.isRequired,
+    attributes: RPT.object,
   };
 
   static defaultProps = {
     onCreate: () => {},
     onError: () => {},
     onLoad: () => {},
+    attributes: {},
   }
 
   // A dictionary mapping script URLs to a dictionary mapping
@@ -76,10 +78,15 @@ export default class Script extends React.Component {
   }
 
   createScript() {
-    const { onCreate, url } = this.props;
+    const { onCreate, url, attributes } = this.props;
     const script = document.createElement('script');
 
     onCreate();
+
+    // add 'data-' or non standard attributes to the script tag
+    if (attributes) {
+      Object.keys(attributes).forEach(prop => script.setAttribute(prop, attributes[prop]));
+    }
 
     script.src = url;
     script.async = 1;
