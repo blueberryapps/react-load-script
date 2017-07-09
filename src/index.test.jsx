@@ -1,3 +1,5 @@
+/* global document */
+
 import React from 'react';
 import { shallow } from 'enzyme';
 import Script from './index';
@@ -11,6 +13,11 @@ beforeEach(() => {
     onError: jest.fn(),
     onLoad: jest.fn(),
     url: 'dummy',
+    attributes: {
+      id: 'dummyId',
+      dummy: 'non standard',
+      'data-dummy': 'standard',
+    },
   };
   wrapper = shallow(<Script {...props} />);
 });
@@ -74,4 +81,11 @@ test('componentWillUnmount should delete observers for the loader', () => {
   expect(getObserver()).toBe('props');
   wrapper.instance().componentWillUnmount();
   expect(getObserver()).toBe(undefined);
+});
+
+test('custom attributes should be set on the script tag', () => {
+  const script = document.getElementById('dummyId');
+  expect(script.getAttribute('id')).toBe('dummyId');
+  expect(script.getAttribute('dummy')).toBe('non standard');
+  expect(script.getAttribute('data-dummy')).toBe('standard');
 });
