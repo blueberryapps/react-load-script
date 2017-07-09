@@ -4,18 +4,18 @@ import { PropTypes as RPT } from 'prop-types';
 export default class Script extends React.Component {
 
   static propTypes = {
+    attributes: RPT.object, // eslint-disable-line react/forbid-prop-types
     onCreate: RPT.func,
     onError: RPT.func.isRequired,
     onLoad: RPT.func.isRequired,
     url: RPT.string.isRequired,
-    attributes: RPT.object,
   };
 
   static defaultProps = {
+    attributes: {},
     onCreate: () => {},
     onError: () => {},
     onLoad: () => {},
-    attributes: {},
   }
 
   // A dictionary mapping script URLs to a dictionary mapping
