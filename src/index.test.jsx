@@ -17,6 +17,7 @@ beforeEach(() => {
       id: 'dummyId',
       dummy: 'non standard',
       'data-dummy': 'standard',
+      async: false,
     },
   };
   wrapper = shallow(<Script {...props} />);
@@ -88,4 +89,5 @@ test('custom attributes should be set on the script tag', () => {
   expect(script.getAttribute('id')).toBe('dummyId');
   expect(script.getAttribute('dummy')).toBe('non standard');
   expect(script.getAttribute('data-dummy')).toBe('standard');
+  expect(script.getAttribute('async')).toBe(false);
 });
