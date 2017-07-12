@@ -90,8 +90,9 @@ export default class Script extends React.Component {
 
     script.src = url;
     
-    // default async to true if not set with custom attributes
-    if (!script.hasAttribute('async')) {
+    if (script.hasAttribute('async') && script.getAttribute('async') === 'false') {
+      script.async = false;
+    } else {
       script.async = 1;
     }
 
