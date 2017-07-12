@@ -17,7 +17,7 @@ beforeEach(() => {
       id: 'dummyId',
       dummy: 'non standard',
       'data-dummy': 'standard',
-      async: false,
+      async: 'false',
     },
   };
   wrapper = shallow(<Script {...props} />);

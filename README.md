@@ -25,7 +25,7 @@ Called when the requested script is fully loaded.
 URL pointing to the script you want to load.
 
 ### `attributes`
-An object used to define custom attributes to be set on the script element. For example, `attributes={{ id: 'someId', 'data-custom: 'value' }}` will result in `<script id="someId" data-custom="value" />`
+An object used to define custom attributes to be set on the script element. For example, `attributes={{ id: 'someId', 'data-custom: 'value' }}` will result in `<script id="someId" data-custom="value" />`. To set `async=false`, specify in `attributes` like so: `attributes={{ async: 'false', ... }}`. 
 
 ## Example
 You can use the following code to load jQuery in your app:
