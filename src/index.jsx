@@ -89,7 +89,7 @@ export default class Script extends React.Component {
     }
 
     script.src = url;
-    
+
     // default async to true if not set with custom attributes
     if (!script.hasAttribute('async')) {
       script.async = 1;

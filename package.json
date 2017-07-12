@@ -1,6 +1,6 @@
 {
   "name": "react-load-script",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "react-load-script enables you to easily create components which depend on third party JS scripts",
   "main": "lib/index.js",
   "author": "Blueberry",
