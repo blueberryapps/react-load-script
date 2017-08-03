@@ -9,6 +9,7 @@ export default class Script extends React.Component {
     onError: RPT.func.isRequired,
     onLoad: RPT.func.isRequired,
     url: RPT.string.isRequired,
+    children: RPT.string,
   };
 
   static defaultProps = {
@@ -16,6 +17,7 @@ export default class Script extends React.Component {
     onCreate: () => {},
     onError: () => {},
     onLoad: () => {},
+    children: undefined,
   }
 
   // A dictionary mapping script URLs to a dictionary mapping
@@ -78,7 +80,7 @@ export default class Script extends React.Component {
   }
 
   createScript() {
-    const { onCreate, url, attributes } = this.props;
+    const { onCreate, url, attributes, children } = this.props;
     const script = document.createElement('script');
 
     onCreate();
@@ -93,6 +95,11 @@ export default class Script extends React.Component {
     // default async to true if not set with custom attributes
     if (!script.hasAttribute('async')) {
       script.async = 1;
+    }
+
+    // put data inside the script tag, so script can use them (linkedin share use case)
+    if (children) {
+      script.innerHTML = children;
     }
 
     const callObserverFuncAndRemoveObserver = (shouldRemoveObserver) => {

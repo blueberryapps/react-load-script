@@ -27,7 +27,10 @@ URL pointing to the script you want to load.
 ### `attributes`
 An object used to define custom attributes to be set on the script element. For example, `attributes={{ id: 'someId', 'data-custom: 'value' }}` will result in `<script id="someId" data-custom="value" />`
 
-## Example
+### `children`
+What is set as children of `<Script>` gets inserted inside the script tag. This can be used to set settings for the script
+
+## Examples
 You can use the following code to load jQuery in your app:
 
 ```jsx
@@ -61,6 +64,30 @@ handleScriptLoad() {
 }
 
 ```
+
+Code to set some content inside the script tag:
+
+```jsx
+import Script from 'react-load-script'
+
+...
+
+render() {
+  return (
+    <Script
+      url="//platform.linkedin.com/in.js"
+      onError={() => {}}
+      onLoad={() => {}}
+    >
+      lang: en_US
+    </Script>
+  )
+}
+
+...
+
+```
+
 
 ## License
 MIT 2016

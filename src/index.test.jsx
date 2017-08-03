@@ -20,7 +20,7 @@ beforeEach(() => {
       async: false,
     },
   };
-  wrapper = shallow(<Script {...props} />);
+  wrapper = shallow(<Script {...props}>data</Script>);
 });
 
 test('renders null', () => {
@@ -90,4 +90,9 @@ test('custom attributes should be set on the script tag', () => {
   expect(script.getAttribute('dummy')).toBe('non standard');
   expect(script.getAttribute('data-dummy')).toBe('standard');
   expect(script.getAttribute('async')).toBe('false');
+});
+
+test('content inside script tag', () => {
+  const script = document.getElementById('dummyId');
+  expect(script.innerHTML).toBe('data');
 });
