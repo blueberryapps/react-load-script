@@ -54,9 +54,12 @@ test('componentDidMount should not run onLoad callback if script not yet loaded'
 });
 
 test('componentDidMount should run onError callback if script has errored', () => {
-  wrapper.instance().constructor.erroredScripts[props.url] = true;
+  const errorEvent = { type: 'error' };
+  wrapper.instance().constructor.erroredScripts[props.url] = errorEvent;
   wrapper.instance().componentDidMount();
   expect(props.onError.mock.calls.length).toBe(1);
+  expect(props.onError.mock.calls[0].length).toBe(1);
+  expect(props.onError.mock.calls[0][0]).toBe(errorEvent);
 });
 
 test('componentDidMount should not run onError callback if script has not errored', () => {

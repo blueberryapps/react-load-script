@@ -49,7 +49,8 @@ export default class Script extends React.Component {
     }
 
     if (this.constructor.erroredScripts[url]) {
-      onError();
+      const errorEvent = this.constructor.erroredScripts[url];
+      onError(errorEvent);
       return;
     }
 
@@ -111,10 +112,10 @@ export default class Script extends React.Component {
       });
     };
 
-    script.onerror = () => {
-      this.constructor.erroredScripts[url] = true;
+    script.onerror = (errorEvent) => {
+      this.constructor.erroredScripts[url] = errorEvent;
       callObserverFuncAndRemoveObserver((observer) => {
-        observer.onError();
+        observer.onError(errorEvent);
         return true;
       });
     };

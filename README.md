@@ -16,7 +16,7 @@ The package exports a single component with the following props:
 Called as soon as the script tag is created.
 
 ### `onError` (required)
-Called in case of an error with the script.
+Called in case of an error with the script. Will receive the generated error event as an argument.
 
 ### `onLoad` (required)
 Called when the requested script is fully loaded.
@@ -52,8 +52,8 @@ handleScriptCreate() {
   this.setState({ scriptLoaded: false })
 }
 
-handleScriptError() {
-  this.setState({ scriptError: true })
+handleScriptError(errorEvent) {
+  this.setState({ scriptError: true, scriptErrorEvent: errorEvent })
 }
 
 handleScriptLoad() {
