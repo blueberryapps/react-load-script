@@ -27,6 +27,17 @@ URL pointing to the script you want to load.
 ### `attributes`
 An object used to define custom attributes to be set on the script element. For example, `attributes={{ id: 'someId', 'data-custom: 'value' }}` will result in `<script id="someId" data-custom="value" />`
 
+### `Constructor.loadedScripts`
+Static that tracks which scripts have been loaded; you can use this to prevent mounting the same script twice
+
+```
+const url = 'foo.com';
+
+return !Script.loadedScripts[url] && (
+  <Script url={url} />
+);
+```
+
 ## Example
 You can use the following code to load jQuery in your app:
 
